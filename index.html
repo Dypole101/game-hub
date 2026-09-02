@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Game Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Username setup modal - shown once on first visit, or when user chooses to change name -->
+  <div id="usernameModal" class="modal-overlay">
+    <div class="modal">
+      <h2>What should we call you?</h2>
+      <p class="modal-sub">This name sticks around across sessions — you can change it anytime.</p>
+      <input type="text" id="usernameInput" maxlength="16" placeholder="Enter a username" autocomplete="off">
+      <div class="modal-error" id="usernameError"></div>
+      <button id="usernameSaveBtn" class="btn btn-primary">Save & continue</button>
+    </div>
+  </div>
+
+  <header class="hub-header">
+    <div class="hub-header-inner">
+      <div class="hub-logo">
+        <span class="hub-logo-mark">◆</span>
+        <span class="hub-logo-text">Game Hub</span>
+      </div>
+      <button id="profileBtn" class="profile-chip">
+        <span class="profile-dot"></span>
+        <span id="profileUsername">Loading…</span>
+        <span class="profile-edit">✎</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="hub-main">
+
+    <section class="hero">
+      <h1 class="hero-title">Pick a game.<br>Invite your crew.</h1>
+      <p class="hero-sub">Eight games, one lobby. Host a private room, drop the code to friends, or jump into an open table.</p>
+    </section>
+
+    <section class="quick-join">
+      <input type="text" id="joinCodeInput" maxlength="5" placeholder="ROOM CODE" autocomplete="off">
+      <button id="joinCodeBtn" class="btn btn-secondary">Join room</button>
+    </section>
+
+    <section class="game-grid" id="gameGrid">
+      <!-- Populated by lobby.js from the GAMES config below, but present as static markup for no-JS / first paint -->
+
+      <article class="game-card" data-game="snake">
+        <div class="game-card-strip strip-snake"></div>
+        <div class="game-card-body">
+          <h3>Snake</h3>
+          <p>2–5 players · shared grid</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="snake">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="snake">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="ludo">
+        <div class="game-card-strip strip-ludo"></div>
+        <div class="game-card-body">
+          <h3>Ludo</h3>
+          <p>2–4 players · classic rules</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="ludo">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="ludo">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="rps">
+        <div class="game-card-strip strip-rps"></div>
+        <div class="game-card-body">
+          <h3>Rock Paper Scissors</h3>
+          <p>2 players · best of odd rounds</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="rps">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="rps">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="tictactoe">
+        <div class="game-card-strip strip-tictactoe"></div>
+        <div class="game-card-body">
+          <h3>Tic-Tac-Toe</h3>
+          <p>2 players · quick match</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="tictactoe">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="tictactoe">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="connect4">
+        <div class="game-card-strip strip-connect4"></div>
+        <div class="game-card-body">
+          <h3>Connect 4</h3>
+          <p>2 players · drop & connect</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="connect4">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="connect4">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="uno">
+        <div class="game-card-strip strip-uno"></div>
+        <div class="game-card-body">
+          <h3>Uno</h3>
+          <p>2–5 players · classic rules</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="uno">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="uno">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="wordguess">
+        <div class="game-card-strip strip-wordguess"></div>
+        <div class="game-card-body">
+          <h3>Word Guess</h3>
+          <p>2–6 players · one host word</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="wordguess">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="wordguess">Browse</button>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="chess">
+        <div class="game-card-strip strip-chess"></div>
+        <div class="game-card-body">
+          <h3>Chess</h3>
+          <p>2 players · legal-move highlighting</p>
+        </div>
+        <div class="game-card-actions">
+          <button class="btn btn-small btn-primary" data-action="create" data-game="chess">Host</button>
+          <button class="btn btn-small btn-ghost" data-action="browse" data-game="chess">Browse</button>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Public rooms browser - slides in when "Browse" is clicked on a game card -->
+    <section id="publicRoomsPanel" class="public-rooms-panel hidden">
+      <div class="public-rooms-header">
+        <h2 id="publicRoomsTitle">Open rooms</h2>
+        <button id="closePublicRooms" class="btn btn-ghost btn-small">Close</button>
+      </div>
+      <div id="publicRoomsList" class="public-rooms-list">
+        <p class="empty-state">No open rooms right now — host one to get things started.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="hub-footer">
+    <p>Room codes expire when everyone leaves. Be nice.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="lobby.js"></script>
+</body>
+</html>
+                                                   </html>
 
