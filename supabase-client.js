@@ -5,8 +5,9 @@
 const SUPABASE_URL = 'https://mgtdchpoknbsuwjjyikx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ndGRjaHBva25ic3V3amp5aWt4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNDQ3MDgsImV4cCI6MjEwMzkyMDcwOH0.nz5XBHPNRVLZQYM3NICIzlaDyCtJmjPaZzoO8lAg2bA';
 
-// Single shared client instance, available globally as `supabaseClient`
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Single shared client instance, attached to window so every other script
+// (lobby.js, and every file in /games) can reach it as window.supabaseClient.
+window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ---- Shared table names (keep in sync with the DB schema) ----
 const TABLES = {
